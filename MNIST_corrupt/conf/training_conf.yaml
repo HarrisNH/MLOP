@@ -1,0 +1,7 @@
+# @package _group_
+dataset_path: '~/data/corruptedmnist'
+seed: 123
+batch_size: 16
+lr: 0.01
+epochs: 1
+
