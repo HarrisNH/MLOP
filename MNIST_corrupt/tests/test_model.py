@@ -2,7 +2,7 @@ import torch
 import pytest
 from MNIST_corrupt.model import MyAwesomeModel
 
-def test_model():
+def test_model_1():
     model = MyAwesomeModel()
     x = torch.randn(1, 1, 28, 28)
     y = model(x)
