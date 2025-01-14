@@ -46,7 +46,7 @@ jobs:
         cache: pip
     - name: Install dependencies
       run: |
-        pip install ruff == 0.8.6
+        pip install ruff==0.8.6
         pip list
     - name: Ruff check
       run: ruff check .
