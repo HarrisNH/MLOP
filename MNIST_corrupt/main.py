@@ -15,7 +15,7 @@ from data import corrupt_mnist
 os.environ["WANDB_SILENT"] = "true"
 
 
-# wandb.login()
+# wandb.login() # Login to W&B
 @hydra.main(config_path="conf", config_name="config.yaml", version_base="1.3.2")
 def train(cfg) -> None:
     print(f"configuration: \n {OmegaConf.to_yaml(cfg)}")
