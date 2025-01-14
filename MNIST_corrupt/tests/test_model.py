@@ -4,7 +4,7 @@ from MNIST_corrupt.model import MyAwesomeModel
 
 def test_model():
     model = MyAwesomeModel()
-    x = torch.randn(1, 1, 28, 28)
+    x = torch.randn(1, 1, 28, 29)
     y = model(x)
     assert y.shape == (1, 10)
 
