@@ -1,3 +1,4 @@
+#Testing model
 import torch
 import pytest
 from MNIST_corrupt.model import MyAwesomeModel

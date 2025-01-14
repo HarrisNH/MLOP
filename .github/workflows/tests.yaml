@@ -1,20 +1,20 @@
-#Push and pull .github tests - lets hope it works
-name: "Run tests"
+name: "CI Workflow"
 
 on:
   push:
-    branches: [ master, main ]
+    branches: [master, main]
   pull_request:
-    branches: [ master, main ]
+    branches: [master, main]
 
 jobs:
-  build:
+  # Job 1: Run tests
+  tests:
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
-          os: [macos-latest]
-          python-version: ["3.11"]
+        os: [macos-latest]
+        python-version: ["3.11"]
 
     steps:
     - name: Checkout
@@ -30,5 +30,25 @@ jobs:
         pip install -r requirements.txt
         pip install -r requirements_tests.txt
     - name: Test with pytest
+      run: pytest -v
+
+  # Job 2: Code formatting
+  format:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: 3.11
+        cache: pip
+    - name: Install dependencies
       run: |
-        pytest -v
+        pip install ruff
+        pip list
+    - name: Ruff check
+      run: ruff check .
+    - name: Ruff format
+      run: ruff format
