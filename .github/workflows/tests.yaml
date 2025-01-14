@@ -11,10 +11,10 @@ jobs:
   build:
     runs-on: ${{ matrix.os }}
     strategy:
-    fail-fast: false
-    matrix:
-        os: [macos-latest]
-        python-version: ["3.11"]
+      fail-fast: false
+      matrix:
+          os: [macos-latest]
+          python-version: ["3.11"]
 
     steps:
     - name: Checkout
@@ -23,6 +23,7 @@ jobs:
       uses: actions/setup-python@v5
       with:
         python-version: ${{ matrix.python-version }}
+        cache: pip
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
