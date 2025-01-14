@@ -6,8 +6,8 @@ from model import MyAwesomeModel
 from omegaconf import OmegaConf
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
-from pytorch_lightning.cli import LightningCLI
 from pytorch_lightning.loggers import WandbLogger
+import wandb
 
 from data import corrupt_mnist
 
@@ -22,6 +22,7 @@ def train(cfg) -> None:
     hparams = OmegaConf.to_container(cfg.experiment, resolve=True, structured_config_mode=False)
 
     # Initialize WandbLogger
+    run = wandb.init(project="MNIST-CORRUPT", config=hparams)
     wandb_logger = WandbLogger(
         project="MNIST-CORRUPT",  # Your project name on W&B
         config=hparams,  # Track hyperparameters and run metadata
@@ -43,6 +44,21 @@ def train(cfg) -> None:
         limit_train_batches=0.2,
     )
     trainer.fit(model)
+
+    model_artifact = wandb.Artifact(
+        name="mnist_model", type="model", description="Trained model for MNIST-CORRUPT", metadata=hparams
+    )
+    model_path = f"{hydra.utils.get_original_cwd()}/MNIST_corrupt/models/model.pt"
+
+    model_artifact.add_file(model_path)
+
+    run.log_artifact(model_artifact)
+
+    model_artifact.wait()  # Wait until the artifact is uploaded
+
+    # Link model to W&B model registry
+    run.link_model(path=model_path, registered_model_name="MNIST-CORRUPT")
+    run.finish()
     # statistics = {"train_loss": [], "train_accuracy": []}
     # criterion = torch.nn.CrossEntropyLoss()
     # optimizer = optim.Adam(model.parameters(), lr=hparams["lr"])
@@ -105,4 +121,4 @@ def evaluate(model_checkpoint: str) -> None:
 
 
 if __name__ == "__main__":
-    LightningCLI(MyAwesomeModel)
+    train()

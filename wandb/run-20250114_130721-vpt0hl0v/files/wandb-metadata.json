@@ -1,0 +1,44 @@
+{
+  "os":  "macOS-15.2-arm64-arm-64bit",
+  "python":  "CPython 3.11.11",
+  "startedAt":  "2025-01-14T12:07:23.510143Z",
+  "program":  "/Users/harrishadzimahovic/Desktop/DTU/5/Machine Learning Operations/MLOPS/MNIST_corrupt/main.py",
+  "codePath":  "MNIST_corrupt/main.py",
+  "git":  {
+    "remote":  "https://github.com/HarrisNH/MLOP.git",
+    "commit":  "3539e7b6b9074472f93444456bbefdcd2ef5565a"
+  },
+  "email":  "s224397@student.dtu.dk",
+  "root":  "/Users/harrishadzimahovic/Desktop/DTU/5/Machine Learning Operations/MLOPS",
+  "host":  "macbookair.dtuguest.clients.local",
+  "executable":  "/Users/harrishadzimahovic/miniconda3/envs/fresh_env/bin/python",
+  "codePathLocal":  "MNIST_corrupt/main.py",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "245107195904",
+      "used":  "212568559616"
+    },
+    "/System/Volumes/Data":  {
+      "total":  "245107195904",
+      "used":  "212568559616"
+    }
+  },
+  "memory":  {
+    "total":  "8589934592"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  8
+  },
+  "apple":  {
+    "name":  "Apple M1",
+    "ecpuCores":  4,
+    "pcpuCores":  4,
+    "gpuCores":  7,
+    "memoryGb":  8,
+    "swapTotalBytes":  "9663676416",
+    "ramTotalBytes":  "8589934592"
+  }
+}
