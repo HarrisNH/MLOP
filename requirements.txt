@@ -8,6 +8,7 @@ torchvision
 pipreqs
 numpy
 pandas
+matplotlib
 # s2 - organisation and version control
 typer
 invoke
