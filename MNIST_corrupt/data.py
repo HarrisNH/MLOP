@@ -2,7 +2,7 @@ from __future__ import annotations
 import torch
 import matplotlib.pyplot as plt  # only needed for plotting
 from mpl_toolkits.axes_grid1 import ImageGrid  # only needed for plotting
-from hydra.utils import get_original_cwd, to_absolute_path
+from hydra.utils import to_absolute_path
 import os
  
 
