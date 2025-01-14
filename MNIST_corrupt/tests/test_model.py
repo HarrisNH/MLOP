@@ -4,9 +4,9 @@ from MNIST_corrupt.model import MyAwesomeModel
 
 def test_model():
     model = MyAwesomeModel()
-    x = torch.randn(1, 1, 28, 29)
+    x = torch.randn(1, 1, 28, 28)
     y = model(x)
-    assert y.shape == (1, 10)
+    assert y.shape == (1, 9)
 
 
 
