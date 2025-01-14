@@ -1,4 +1,4 @@
-#Push and pull .github tests
+#Push and pull .github tests - lets hope it works
 name: "Run tests"
 
 on:
