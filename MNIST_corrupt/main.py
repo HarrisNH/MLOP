@@ -1,11 +1,7 @@
 import hydra
-from loguru import logger
 from pytorch_lightning.loggers import WandbLogger  # Import WandbLogger
 import torch
-import wandb
-import matplotlib.pyplot as plt
 from data import corrupt_mnist
-from hydra.utils import to_absolute_path
 from model import MyAwesomeModel
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
