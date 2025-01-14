@@ -7,7 +7,7 @@ from omegaconf import OmegaConf
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
 from pytorch_lightning.cli import LightningCLI
-from pytorch_lightning.loggers import WandbLogger  # Import WandbLogger
+from pytorch_lightning.loggers import WandbLogger
 
 from data import corrupt_mnist
 
