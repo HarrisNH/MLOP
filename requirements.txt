@@ -1,7 +1,30 @@
-torch==2.4.0
-typer==0.15.1
-fastapi==0.115.6
-uvicorn==0.34.0
-matplotlib
-invoke==2.2.0
-hydra-core
+# list of all packages used throughout the exercises
+
+# s1 - development environment
+python-dotenv
+nbconvert
+torch
+torchvision
+pipreqs
+numpy
+pandas
+# s2 - organisation and version control
+typer
+invoke
+cookiecutter
+dvc
+dvc-gdrive
+ruff
+mypy
+# s3 - reproducibility
+torchvision
+#hydra-cookiecutter
+# s4 - debugging and logging
+pytorch-lightning
+wandb
+snakeviz
+torch_tb_profiler
+# s5 - continuous integration
+pre-commit
+pytest
+coverage
