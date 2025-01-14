@@ -1,22 +1,22 @@
+import os
+
 import hydra
-from pytorch_lightning.loggers import WandbLogger  # Import WandbLogger
 import torch
-from data import corrupt_mnist
 from model import MyAwesomeModel
+from omegaconf import OmegaConf
 from pytorch_lightning import Trainer
 from pytorch_lightning.callbacks import EarlyStopping, ModelCheckpoint
-from omegaconf import OmegaConf
-import os
 from pytorch_lightning.cli import LightningCLI
+from pytorch_lightning.loggers import WandbLogger  # Import WandbLogger
 
+from data import corrupt_mnist
 
 # Disable W&B logging
 os.environ["WANDB_SILENT"] = "true"
 
-#wandb.login()
-@hydra.main(config_path = "conf", config_name = "config.yaml",version_base="1.3.2")
 
-
+# wandb.login()
+@hydra.main(config_path="conf", config_name="config.yaml", version_base="1.3.2")
 def train(cfg) -> None:
     print(f"configuration: \n {OmegaConf.to_yaml(cfg)}")
     hparams = OmegaConf.to_container(cfg.experiment, resolve=True, structured_config_mode=False)
@@ -24,20 +24,26 @@ def train(cfg) -> None:
     # Initialize WandbLogger
     wandb_logger = WandbLogger(
         project="MNIST-CORRUPT",  # Your project name on W&B
-        config=hparams           # Track hyperparameters and run metadata
+        config=hparams,  # Track hyperparameters and run metadata
     )
     """Train a model on MNIST."""
-    model = MyAwesomeModel(lr=hparams["lr"],batch_size=hparams["batch_size"])
-    early_stopping_callback = EarlyStopping(
-        monitor="train_loss", patience=3, verbose=True, mode="min"
-    )
+    model = MyAwesomeModel(lr=hparams["lr"], batch_size=hparams["batch_size"])
+    early_stopping_callback = EarlyStopping(monitor="train_loss", patience=3, verbose=True, mode="min")
     checkpoint_callback = ModelCheckpoint(
-        dirpath=f"{hydra.utils.get_original_cwd()}/MLOPS/MNIST_corrupt/models", monitor="train_loss", mode="min"
+        dirpath=f"{hydra.utils.get_original_cwd()}/MLOPS/MNIST_corrupt/models",
+        monitor="train_loss",
+        mode="min",
     )
 
-    trainer= Trainer(callbacks=[early_stopping_callback, checkpoint_callback],max_epochs=hparams["epochs"],default_root_dir=hydra.utils.get_original_cwd(),logger=wandb_logger,limit_train_batches=0.2)
+    trainer = Trainer(
+        callbacks=[early_stopping_callback, checkpoint_callback],
+        max_epochs=hparams["epochs"],
+        default_root_dir=hydra.utils.get_original_cwd(),
+        logger=wandb_logger,
+        limit_train_batches=0.2,
+    )
     trainer.fit(model)
-        #statistics = {"train_loss": [], "train_accuracy": []}
+    # statistics = {"train_loss": [], "train_accuracy": []}
     # criterion = torch.nn.CrossEntropyLoss()
     # optimizer = optim.Adam(model.parameters(), lr=hparams["lr"])
     # for epoch in range(hparams["epochs"]):
@@ -62,18 +68,21 @@ def train(cfg) -> None:
     # artifact.save()
     # run.log_artifact(artifact)
     # fig, axs = plt.subplots(1, 2, figsize=(15, 5))
-    
+
     # axs[0].plot(statistics["train_loss"])
     # axs[0].set_title("Train loss")
     # axs[1].plot(statistics["train_accuracy"])
     # axs[1].set_title("Train accuracy")
     # fig.savefig("training_statistics.png")
     # wandb.log({"Training perfomance": wandb.Image(fig)})
-    #plt.show()
+    # plt.show()
 
-#@app.command()
+
+# @app.command()
 def evaluate(model_checkpoint: str) -> None:
-    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu")
+    DEVICE = torch.device(
+        "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
+    )
     """Evaluate a trained model."""
     print("Evaluating like my life depends on it")
     print(model_checkpoint)
@@ -86,16 +95,13 @@ def evaluate(model_checkpoint: str) -> None:
     test_dataloader = torch.utils.data.DataLoader(test_set, batch_size=32)
 
     model.eval()
-    correct,total = 0,0
-    for img,target in test_dataloader:
+    correct, total = 0, 0
+    for img, target in test_dataloader:
         img, target = img.to(DEVICE), target.to(DEVICE)
         y_pred = model(img)
         correct += (y_pred.argmax(dim=1) == target).float().sum().item()
         total += target.size(0)
     print(f"Test accuracy: {correct / total}")
-
-
-    
 
 
 if __name__ == "__main__":

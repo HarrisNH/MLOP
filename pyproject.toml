@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools", "setuptools-scm"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "cnn_mnist"
+version = "0.0.1"
+description = "CNN network to identify hand-written digits"
+authors = [
+  { name = "Harris", email = "your@email.com" },
+]
+license = { file = "LICENSE" }
+readme = "README.md"
+requires-python = ">=3.11"
+dynamic = ["dependencies", "optional-dependencies"]
+
+[project.scripts]
+train = "cnn_mnist.train:train"
+evaluate = "cnn_mnist.evaluate:evaluate"
+iris_classifier = "cnn_mnist.iris_classifier:app"
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.dynamic.optional-dependencies]
+dev = {file = ['requirements_dev.txt']}
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["I"]
+
+[tool.coverage.run]
+omit = ["tests/*"]
+

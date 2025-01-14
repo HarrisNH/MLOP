@@ -5,9 +5,7 @@ import pytest
 def f():
     raise ExceptionGroup(
         "Group message",
-        [
-            RuntimeError()
-        ],
+        [RuntimeError()],
     )
 
 

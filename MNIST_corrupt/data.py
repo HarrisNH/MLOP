@@ -1,26 +1,28 @@
 from __future__ import annotations
-import torch
-import matplotlib.pyplot as plt  # only needed for plotting
-from mpl_toolkits.axes_grid1 import ImageGrid  # only needed for plotting
-from hydra.utils import to_absolute_path
-import os
- 
 
-def corrupt_mnist() -> tuple[torch.utils.data.Dataset,torch.utils.data.Dataset]:
+import os
+
+import matplotlib.pyplot as plt  # only needed for plotting
+import torch
+from hydra.utils import to_absolute_path
+from mpl_toolkits.axes_grid1 import ImageGrid  # only needed for plotting
+
+
+def corrupt_mnist() -> tuple[torch.utils.data.Dataset, torch.utils.data.Dataset]:
     """Return train and test dataloaders for corrupt MNIST."""
     train_images, train_target = [], []
     print(os.getcwd())
     DATA_PATH = "data/corruptedmnist"
     DATA_PATH = to_absolute_path(DATA_PATH)
-    #MLOPS/data/corruptedmnist/test_images.pt
+    # MLOPS/data/corruptedmnist/test_images.pt
     for i in range(6):
-        train_images.append(torch.load(f"{DATA_PATH}/train_images_{i}.pt",weights_only=True))
-        train_target.append(torch.load(f"{DATA_PATH}/train_target_{i}.pt",weights_only=True))
+        train_images.append(torch.load(f"{DATA_PATH}/train_images_{i}.pt", weights_only=True))
+        train_target.append(torch.load(f"{DATA_PATH}/train_target_{i}.pt", weights_only=True))
     train_images = torch.cat(train_images)
     train_target = torch.cat(train_target)
 
-    test_images: torch.Tensor = torch.load(f"{DATA_PATH}/test_images.pt",weights_only=True)
-    test_target: torch.Tensor = torch.load(f"{DATA_PATH}/test_target.pt",weights_only=True)
+    test_images: torch.Tensor = torch.load(f"{DATA_PATH}/test_images.pt", weights_only=True)
+    test_target: torch.Tensor = torch.load(f"{DATA_PATH}/test_target.pt", weights_only=True)
 
     train_images = train_images.unsqueeze(1).float()
     test_images = test_images.unsqueeze(1).float()
@@ -43,6 +45,7 @@ def show_image_and_target(images: torch.Tensor, target: torch.Tensor) -> None:
         ax.set_title(f"Label: {label.item()}")
         ax.axis("off")
     plt.show()
+
 
 if __name__ == "__main__":
     train_set, test_set = corrupt_mnist()

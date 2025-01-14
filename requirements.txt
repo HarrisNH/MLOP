@@ -9,6 +9,7 @@ pipreqs
 numpy
 pandas
 matplotlib
+pre-commit
 # s2 - organisation and version control
 typer
 invoke

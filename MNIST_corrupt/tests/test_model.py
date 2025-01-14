@@ -1,14 +1,15 @@
-#Testing model
-import torch
+# Testing model
 import pytest
+import torch
+
 from MNIST_corrupt.model import MyAwesomeModel
+
 
 def test_model_1():
     model = MyAwesomeModel()
     x = torch.randn(1, 1, 28, 28)
     y = model(x)
     assert y.shape == (1, 10)
-
 
 
 @pytest.mark.parametrize("batch_size", [32, 64])
